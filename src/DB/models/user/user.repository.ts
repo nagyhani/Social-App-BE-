@@ -1,5 +1,5 @@
 import { IUser } from "../../../common";
-import { AbstractRepository } from "../../abstratct.repository";
+import { AbstractRepository } from "../../abstract.repository";
 import { User } from "./user.model";
 
 export class UserRepository extends AbstractRepository<IUser>{

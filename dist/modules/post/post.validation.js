@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.addReactionSchema = exports.createPostSchema = void 0;
+const zod_1 = __importDefault(require("zod"));
+const common_1 = require("../../common");
+exports.createPostSchema = zod_1.default.object({
+    content: common_1.generalFields.content,
+    attachments: common_1.generalFields.attachments
+}).refine((data) => {
+    const { attachments, content } = data;
+    if (!content && !attachments || attachments?.length == 0)
+        throw new common_1.BadRequestException("content or attachments is required");
+    return true;
+});
+exports.addReactionSchema = zod_1.default.object({
+    postId: common_1.generalFields.postId,
+    reaction: common_1.generalFields.reaction
+});

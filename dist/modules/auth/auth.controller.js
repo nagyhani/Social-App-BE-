@@ -27,7 +27,7 @@ router.patch("/reset-password", middleware_1.isAuthenticated, (0, middleware_1.i
     return (0, common_1.successResponse)({ res, message: "password updated successfully" });
 });
 router.patch("/change-password", middleware_1.isAuthenticated, (0, middleware_1.isValid)(auth_validation_1.changePasswordSchema), async (req, res, next) => {
-    await auth_service_1.authService.changePassword(req.body);
+    await auth_service_1.authService.changePassword(req.body, req.user._id);
     return (0, common_1.successResponse)({ res, message: "password changed successfully" });
 });
 exports.default = router;

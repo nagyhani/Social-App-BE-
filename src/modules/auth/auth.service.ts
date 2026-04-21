@@ -1,4 +1,5 @@
 
+import { Types } from 'mongoose';
 import { BadRequestException, compare, ConflictException, encrypt, generateOTP, generateTokes, hash, NotFoundException, sendEmail } from '../../common';
 import { deleteFromCache, getFromCache, setIntoCache } from '../../DB';
 import { UserRepository } from './../../DB/models/user/user.repository';
@@ -111,17 +112,18 @@ import { ChangePasswordDTO, LoginDTO, ResetPasswordDTO, SignUpDTO, VerifyAccount
        await this.userRepo.update({email:resetPasswordDTO.email},{password:resetPasswordDTO.password})
     }
 
-    async changePassword(changePasswordDTO :ChangePasswordDTO){
-
-        const userExist = await this.userRepo.getOne({email:changePasswordDTO.email})
-
-        const match = await compare(changePasswordDTO.oldPassword ,userExist?.password as string)
+    async changePassword(changePasswordDTO :ChangePasswordDTO , userId : Types.ObjectId){
+        
+        const userExist =  await this.userRepo.getOne({_id: userId})
+        console.log(userExist);
+        
+        const match = await compare(changePasswordDTO.oldPassword , userExist?.password as string)
 
         if(!match) throw new BadRequestException("old password is incorrect")
 
             changePasswordDTO.newPassword = await hash(changePasswordDTO.newPassword)
 
-        this.userRepo.update({email:changePasswordDTO.email},{password:changePasswordDTO.newPassword})
+        this.userRepo.update({_id : userId},{password:changePasswordDTO.newPassword})
     }
 }
 

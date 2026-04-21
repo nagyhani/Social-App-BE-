@@ -12,3 +12,18 @@ export enum SYS_PROVIDER {
     system,
     google
 }
+
+export enum SYS_REACTION {
+    sad,
+    like,
+    love,
+    angry,
+    haha,
+    wow
+}
+
+
+export enum ON_MODEL {
+    Post = "Post",
+    Comment = "Comment",
+}

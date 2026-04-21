@@ -46,7 +46,7 @@ router.patch("/reset-password",isAuthenticated,isValid(resetPasswordSchema),asyn
 
 router.patch("/change-password",isAuthenticated,isValid(changePasswordSchema),async(req:Request,res:Response,next:NextFunction)=>{
     
-   await authService.changePassword(req.body)
+   await authService.changePassword(req.body,req.user._id)
 
     return successResponse({res,message:"password changed successfully"})
 })

@@ -13,5 +13,9 @@ exports.generalFields = {
     rePassword: zod_1.default.string({ message: "rePassword is required" }),
     gender: zod_1.default.enum(enums_1.SYS_GENDER).optional(),
     phone: zod_1.default.string({ message: "Phone is required" }).regex(/^(?:\+20|0)?1[0125][0-9]{8}$/, { message: "number invalid" }),
-    otp: zod_1.default.string({ message: "OTP is required" }).regex(/^\d{6}$/, { message: "otp should be six numbers" })
+    otp: zod_1.default.string({ message: "OTP is required" }).regex(/^\d{6}$/, { message: "otp should be six numbers" }),
+    content: zod_1.default.string().optional(),
+    attachments: zod_1.default.array(zod_1.default.string()).optional(),
+    reaction: zod_1.default.enum(enums_1.SYS_REACTION),
+    postId: zod_1.default.string()
 };

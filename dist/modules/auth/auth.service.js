@@ -71,13 +71,14 @@ class AuthService {
         resetPasswordDTO.password = await (0, common_1.hash)(resetPasswordDTO.password);
         await this.userRepo.update({ email: resetPasswordDTO.email }, { password: resetPasswordDTO.password });
     }
-    async changePassword(changePasswordDTO) {
-        const userExist = await this.userRepo.getOne({ email: changePasswordDTO.email });
+    async changePassword(changePasswordDTO, userId) {
+        const userExist = await this.userRepo.getOne({ _id: userId });
+        console.log(userExist);
         const match = await (0, common_1.compare)(changePasswordDTO.oldPassword, userExist?.password);
         if (!match)
             throw new common_1.BadRequestException("old password is incorrect");
         changePasswordDTO.newPassword = await (0, common_1.hash)(changePasswordDTO.newPassword);
-        this.userRepo.update({ email: changePasswordDTO.email }, { password: changePasswordDTO.newPassword });
+        this.userRepo.update({ _id: userId }, { password: changePasswordDTO.newPassword });
     }
 }
 exports.authService = new AuthService();

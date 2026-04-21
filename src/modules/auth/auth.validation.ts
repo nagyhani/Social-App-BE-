@@ -1,5 +1,5 @@
-import z, { email } from "zod";
-import { generalFields, SYS_GENDER } from "../../common";
+import z from "zod";
+import { generalFields} from "../../common";
 
 
 export const signUpSchema = z.object({
@@ -37,7 +37,6 @@ export const signUpSchema = z.object({
   })
 
       export const changePasswordSchema = z.object({
-   email : generalFields.email,
    oldPassword : generalFields.password,
    newPassword : generalFields.password
   })

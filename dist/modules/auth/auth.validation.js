@@ -33,7 +33,6 @@ exports.resetPasswordSchema = zod_1.default.object({
     password: common_1.generalFields.password
 });
 exports.changePasswordSchema = zod_1.default.object({
-    email: common_1.generalFields.email,
     oldPassword: common_1.generalFields.password,
     newPassword: common_1.generalFields.password
 });

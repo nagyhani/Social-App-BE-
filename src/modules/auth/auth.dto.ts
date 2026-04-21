@@ -1,6 +1,6 @@
 import { SYS_GENDER } from "../../common"
 
-export type SignUpDTO =  {
+export interface SignUpDTO   {
     userName : string,
     email : string,
     password : string,
@@ -11,24 +11,23 @@ export type SignUpDTO =  {
 }
 
 
-export type LoginDTO = {
+export interface LoginDTO {
     email : string,
     password : string
 }
 
-export type VerifyAccountDTO = {
+export interface VerifyAccountDTO {
     email : string,
     otp: string
 }
 
-export type ResetPasswordDTO = {
+export interface ResetPasswordDTO {
     email:string,
     otp:string,
     password : string
 }
 
-export type ChangePasswordDTO = {
-     email:string,
+export interface ChangePasswordDTO  {
     oldPassword : string,
     newPassword : string
 }
