@@ -6,7 +6,3 @@ export interface CreatePostDTO  {
     attachments?: string[]
 }
 
-export interface AddReactionDTO {
-    postId : Types.ObjectId,
-    reaction : SYS_REACTION
-}

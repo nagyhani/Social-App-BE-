@@ -4,5 +4,6 @@ export interface IPost {
     userId: Types.ObjectId,
     content?:string,
     attachments?:string[],
-    reactionCount : number
+    reactionCount : number,
+    commentCount : number
 }

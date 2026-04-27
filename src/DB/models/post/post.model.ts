@@ -8,7 +8,8 @@ const schema = new Schema<IPost>({
     userId:{type: Schema.Types.ObjectId , required:true , ref: "User"},
     content: String,
     attachments: [String],
-    reactionCount : Number
+    reactionCount : Number,
+    commentCount: Number
     
 },{timestamps:true})
 

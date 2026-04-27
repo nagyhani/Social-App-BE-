@@ -15,6 +15,6 @@ export const createPostSchema = z.object({
 
 
   export const addReactionSchema = z.object({
-    postId: generalFields.postId ,
+    id: generalFields.id ,
     reaction :generalFields.reaction
   })

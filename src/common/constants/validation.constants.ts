@@ -12,5 +12,5 @@ export const generalFields = {
     content : z.string().optional(),
     attachments : z.array(z.string()).optional(),
     reaction : z.enum(SYS_REACTION),
-    postId : z.string()
+    id : z.string()
 }

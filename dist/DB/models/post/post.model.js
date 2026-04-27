@@ -6,6 +6,7 @@ const schema = new mongoose_1.Schema({
     userId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "User" },
     content: String,
     attachments: [String],
-    reactionCount: Number
+    reactionCount: Number,
+    commentCount: Number
 }, { timestamps: true });
 exports.Post = (0, mongoose_1.model)("Post", schema);

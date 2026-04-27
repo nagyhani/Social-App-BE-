@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { isAuthenticated, isValid } from "../../middleware";
-import { successResponse } from "../../common";
+import { addReaction, successResponse } from "../../common";
 import { addReactionSchema, createPostSchema } from "./post.validation";
 import postService from "./post.service";
+import { postRepo } from "../../DB/models/post/post.repository";
 
 
 const router = Router()
@@ -15,7 +16,7 @@ router.post("/" , isAuthenticated,isValid(createPostSchema), async (req:Request,
 
 router.post("/add-reaction",isAuthenticated,isValid(addReactionSchema),async (req:Request,res:Response,next:NextFunction)=>{
 
-  await postService.addReaction(req.body,req.user._id)
+  await addReaction(req.body,req.user._id,postRepo)
 
    return successResponse({res,message:"done"})
 

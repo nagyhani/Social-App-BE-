@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 import { PostRepository } from "../../DB/models/post/post.repository";
-import { AddReactionDTO, CreatePostDTO } from "./post.dto";
+import {CreatePostDTO } from "./post.dto";
 import { NotFoundException, ON_MODEL } from "../../common";
 import { UserReactionRepository } from "../../DB/models/user-reaction/user-reaction.repository";
+import { AddReactionDTO } from "../../common/dto";
 
 class PostService{
 
@@ -15,34 +16,34 @@ class PostService{
       return this.postRepo.create({...createPost,userId})
     }
 
-    async addReaction(addReactionDTO: AddReactionDTO , userId:Types.ObjectId){
-          // check post exist
-      const postExist =  await this.postRepo.getOne({_id : addReactionDTO.postId})
-      if(!postExist) throw new NotFoundException("Post not found")
+    // async addReaction(addReactionDTO: AddReactionDTO , userId:Types.ObjectId){
+    //       // check post exist
+    //   const postExist =  await this.postRepo.getOne({_id : addReactionDTO.id})
+    //   if(!postExist) throw new NotFoundException("Post not found")
 
-        //check user reactions
-      const userReaction =  await this.userReactionRepo.getOne({onModel:ON_MODEL.Post,refId:addReactionDTO.postId,userId})
+    //     //check user reactions
+    //   const userReaction =  await this.userReactionRepo.getOne({onModel:ON_MODEL.Post,refId:addReactionDTO.id,userId})
 
-      // if no reaction
-      if(!userReaction){
-       await this.userReactionRepo.create({onModel:ON_MODEL.Post,refId:addReactionDTO.postId ,userId,reaction:addReactionDTO.reaction})
+    //   // if no reaction
+    //   if(!userReaction){
+    //    await this.userReactionRepo.create({onModel:ON_MODEL.Post,refId:addReactionDTO.id ,userId,reaction:addReactionDTO.reaction})
 
-       await this.postRepo.update({_id:addReactionDTO.postId},{$inc:{reactionCount : 1}})
+    //    await this.postRepo.update({_id:addReactionDTO.id},{$inc:{reactionCount : 1}})
 
-       return;
-      }
+    //    return;
+    //   }
 
-      // same reaction
-      if(userReaction.reaction == addReactionDTO.reaction){
-        await this.postRepo.update({_id:addReactionDTO.postId},{$inc:{reactionCount : -1}})
-        await this.userReactionRepo.delete({_id : userReaction._id})
+    //   // same reaction
+    //   if(userReaction.reaction == addReactionDTO.reaction){
+    //     await this.postRepo.update({_id:addReactionDTO.id},{$inc:{reactionCount : -1}})
+    //     await this.userReactionRepo.delete({_id : userReaction._id})
 
-        return
-      }
+    //     return
+    //   }
   
-      // different reaction
-     await this.userReactionRepo.update({_id:userReaction._id},{reaction:addReactionDTO.reaction})
-    }
+    //   // different reaction
+    //  await this.userReactionRepo.update({_id:userReaction._id},{reaction:addReactionDTO.reaction})
+    // }
 
     async get(params:string){
         // check post exist

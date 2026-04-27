@@ -16,6 +16,6 @@ exports.createPostSchema = zod_1.default.object({
     return true;
 });
 exports.addReactionSchema = zod_1.default.object({
-    postId: common_1.generalFields.postId,
+    id: common_1.generalFields.id,
     reaction: common_1.generalFields.reaction
 });

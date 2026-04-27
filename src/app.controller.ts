@@ -1,5 +1,5 @@
 import express from "express"
-import { authRouter, postRouter } from "./modules";
+import { authRouter, commentRouter, postRouter } from "./modules";
 import { connectDB } from "./DB/connection";
 import { errorGlobalHandler } from "./common";
 import { redisConnect } from "./DB/redis.connect";
@@ -14,6 +14,7 @@ export function bootstrap(){
 
     app.use("/auth" , authRouter)
     app.use("/post",postRouter)
+    app.use("/comment",commentRouter)
 
     app.use(errorGlobalHandler)
 

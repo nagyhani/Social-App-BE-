@@ -17,6 +17,7 @@ function bootstrap() {
     app.use(express_1.default.json());
     app.use("/auth", modules_1.authRouter);
     app.use("/post", modules_1.postRouter);
+    app.use("/comment", modules_1.commentRouter);
     app.use(common_1.errorGlobalHandler);
     app.listen(port, () => {
         console.log("application running successfully on port", port);

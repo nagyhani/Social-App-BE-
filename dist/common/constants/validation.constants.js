@@ -17,5 +17,5 @@ exports.generalFields = {
     content: zod_1.default.string().optional(),
     attachments: zod_1.default.array(zod_1.default.string()).optional(),
     reaction: zod_1.default.enum(enums_1.SYS_REACTION),
-    postId: zod_1.default.string()
+    id: zod_1.default.string()
 };
