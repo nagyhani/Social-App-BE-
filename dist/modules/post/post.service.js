@@ -50,19 +50,23 @@ class PostService {
         //get post
         return postsExist;
     }
-    async update(updatedPostDTO, params) {
+    async update(updatedPostDTO, params, userId) {
         // check post exist
         const postExist = await this.postRepo.getOne({ _id: params });
         if (!postExist)
             throw new common_1.NotFoundException("Post not found");
+        if (postExist.userId != userId)
+            throw new common_1.UnAuthorizedException(" you cant update this post");
         const updatedPost = await this.postRepo.update({ _id: params }, updatedPostDTO);
         return updatedPost;
     }
-    async delete(params) {
+    async delete(params, userId) {
         // check post exist
         const postExist = await this.postRepo.getOne({ _id: params });
         if (!postExist)
             throw new common_1.NotFoundException("Post not found");
+        if (postExist.userId != userId)
+            throw new common_1.UnAuthorizedException(" you cant delete this post");
         return await this.postRepo.delete({ _id: params });
     }
 }

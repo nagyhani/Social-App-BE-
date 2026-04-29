@@ -26,13 +26,12 @@ router.get("/:postId", middleware_1.isAuthenticated, async (req, res, next) => {
     const post = await post_service_1.default.get(req.params.postId);
     return (0, common_1.successResponse)({ res, message: "done", data: post });
 });
-router.patch("/:postId", middleware_1.isAuthenticated, (0, middleware_1.isValid)(post_validation_1.createPostSchema), async (req, res, next) => {
-    const post = await post_service_1.default.update(req.body, req.params.postId);
+router.patch("/:postId", (0, middleware_1.isValid)(post_validation_1.createPostSchema), async (req, res, next) => {
+    const post = await post_service_1.default.update(req.body, req.params.postId, req.user._id);
     return (0, common_1.successResponse)({ res, message: "done", data: post });
 });
 router.delete("/:postId", middleware_1.isAuthenticated, async (req, res, next) => {
-    await post_service_1.default.delete(req.params.postId);
-    const post = await post_service_1.default.update(req.body, req.params.postId);
+    await post_service_1.default.delete(req.params.postId, req.user._id);
     return (0, common_1.successResponse)({ res, message: "Post deleted" });
 });
 exports.default = router;

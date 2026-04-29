@@ -11,4 +11,14 @@ const schema = new mongoose_1.Schema({
     attachment: String,
     reactionCount: Number
 }, { timestamps: true });
+schema.pre("deleteOne", async function () {
+    const filter = this.getFilter();
+    console.log(filter);
+    const replies = await this.model.find({ parentId: filter._id });
+    if (replies.length > 0) {
+        for (const reply of replies) {
+            await this.model.deleteOne({ _id: reply._id });
+        }
+    }
+});
 exports.Comment = (0, mongoose_1.model)("Comment", schema);

@@ -30,5 +30,16 @@ class CommentService {
             throw new common_1.NotFoundException("No comments");
         return comments;
     }
+    async delete(id, userId) {
+        const commentExist = await this.commentRepo.getOne({ _id: id }, {}, { populate: ["postId"] });
+        if (!commentExist)
+            throw new common_1.NotFoundException("comment not found!");
+        const commentAuthor = commentExist.userId.toString();
+        const postAuthor = commentExist.postId?.userId?.toString();
+        if (userId.toString() != commentAuthor && userId.toString() != postAuthor) {
+            throw new common_1.UnAuthorizedException("you are not allowed");
+        }
+        return await this.commentRepo.delete({ _id: id });
+    }
 }
 exports.default = new CommentService(new post_repository_1.PostRepository(), new comment_repository_1.CommentRepository());

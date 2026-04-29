@@ -29,6 +29,6 @@ export abstract class AbstractRepository<T>{
     }
 
     public async delete(filter:QueryFilter<T>){
-       return this._model.deleteOne(filter)
+       return await this._model.deleteOne(filter)
     }
 }

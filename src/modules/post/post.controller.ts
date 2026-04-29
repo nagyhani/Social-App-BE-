@@ -36,17 +36,16 @@ router.get("/:postId" , isAuthenticated , async (req:Request,res:Response,next:N
   return successResponse({res,message:"done" , data:post})
 })
 
-router.patch("/:postId" ,isAuthenticated,isValid(createPostSchema),async (req:Request,res:Response,next:NextFunction)=>{
+router.patch("/:postId" ,isValid(createPostSchema),async (req:Request,res:Response,next:NextFunction)=>{
 
-    const post = await postService.update(req.body,req.params.postId as string)
+    const post = await postService.update(req.body,req.params.postId as string,req.user._id)
 
     return successResponse({res,message:"done" , data:post})
 })
 
 router.delete("/:postId" , isAuthenticated,async (req:Request,res:Response,next:NextFunction)=>{
 
-  await postService.delete(req.params.postId as string)
-    const post = await postService.update(req.body,req.params.postId as string)
+  await postService.delete(req.params.postId as string,req.user._id)
 
     return successResponse({res,message:"Post deleted"})
 })

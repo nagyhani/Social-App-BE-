@@ -4,6 +4,7 @@ import commentService from "./comment.service";
 import { addReaction, successResponse } from "../../common";
 import { addReactionSchema } from "../post/post.validation";
 import { commentRepo} from "../../DB/models/comment/comment.repository";
+import { Types } from "mongoose";
 
 
 const router = Router()
@@ -32,6 +33,11 @@ router.post("/:postId{/:parentId}",isAuthenticated,async (req:Request,res:Respon
    const createdComment = await commentService.create(req.body,req.params,req.user._id)
 
      return successResponse({res,status:201,message:"Comment created" , data:{createdComment}})
+})
+
+router.delete("/:id",isAuthenticated,async (req:Request,res:Response,next:NextFunction)=>{
+  const deletedComment = await commentService.delete(new Types.ObjectId(req.params.id as string),req.user._id)
+  return successResponse({res,message:"Comment deleted" ,data:{deletedComment}})
 })
 
 

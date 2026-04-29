@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { PostRepository } from "../../DB/models/post/post.repository";
 import {CreatePostDTO } from "./post.dto";
-import { NotFoundException, ON_MODEL } from "../../common";
+import { NotFoundException, ON_MODEL, UnAuthorizedException } from "../../common";
 import { UserReactionRepository } from "../../DB/models/user-reaction/user-reaction.repository";
 import { AddReactionDTO } from "../../common/dto";
 
@@ -63,10 +63,12 @@ class PostService{
         return postsExist
     }
 
-    async update(updatedPostDTO: CreatePostDTO,params:string){
+    async update(updatedPostDTO: CreatePostDTO,params:string,userId:Types.ObjectId){
         // check post exist
            const postExist =  await this.postRepo.getOne({_id : params})
+           
          if(!postExist) throw new NotFoundException("Post not found")
+          if(postExist.userId != userId) throw new UnAuthorizedException(" you cant update this post")
 
         const updatedPost = await this.postRepo.update({_id:params},updatedPostDTO)
 
@@ -75,10 +77,11 @@ class PostService{
 
     }
 
-    async delete(params:string){
+    async delete(params:string,userId:Types.ObjectId){
       // check post exist
            const postExist =  await this.postRepo.getOne({_id : params})
          if(!postExist) throw new NotFoundException("Post not found")
+          if(postExist.userId != userId) throw new UnAuthorizedException(" you cant delete this post")
 
          return await this.postRepo.delete({_id : params})
     }

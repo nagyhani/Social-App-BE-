@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { CreateCommentDTO } from "./comment.dto";
 import { PostRepository } from "../../DB/models/post/post.repository";
-import { NotFoundException } from "../../common";
+import { IPost, NotFoundException, UnAuthorizedException } from "../../common";
 import { CommentRepository } from "../../DB/models/comment/comment.repository";
 
 
@@ -36,6 +36,27 @@ class CommentService {
 
             return comments
     }
+
+  async delete(id: Types.ObjectId, userId: Types.ObjectId) {
+ 
+
+  const commentExist = await this.commentRepo.getOne({_id:id},{},{populate:["postId"]});
+  
+  if (!commentExist) throw new NotFoundException("comment not found!");
+
+  const commentAuthor = commentExist.userId.toString();
+  
+
+  const postAuthor = (commentExist.postId as any)?.userId?.toString();
+  
+
+  if (userId.toString() != commentAuthor && userId.toString() != postAuthor) {
+    throw new UnAuthorizedException("you are not allowed");
+  }
+
+  
+ return await this.commentRepo.delete({_id:id});
+}
 }
 
 export default new CommentService(new PostRepository(),new CommentRepository())

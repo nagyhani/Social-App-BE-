@@ -21,7 +21,7 @@ class AbstractRepository {
         return this._model.findOneAndUpdate(filter, update, options);
     }
     async delete(filter) {
-        return this._model.deleteOne(filter);
+        return await this._model.deleteOne(filter);
     }
 }
 exports.AbstractRepository = AbstractRepository;
