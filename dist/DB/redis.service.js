@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setIntoCache = setIntoCache;
+exports.getFromCache = getFromCache;
+exports.deleteFromCache = deleteFromCache;
+exports.addToSet = addToSet;
+exports.rmSet = rmSet;
+exports.getAllSet = getAllSet;
+const redis_connect_1 = require("./redis.connect");
+async function setIntoCache(key, value, expire) {
+    redis_connect_1.redisClient.set(key, value, { EX: expire });
+}
+async function getFromCache(key) {
+    return redis_connect_1.redisClient.get(key);
+}
+async function deleteFromCache(key) {
+    return redis_connect_1.redisClient.del(key);
+}
+async function addToSet(key, value) {
+    return await redis_connect_1.redisClient.sAdd(key, value);
+}
+async function rmSet(key, value) {
+    const number = await redis_connect_1.redisClient.sRem(key, value);
+    return !!number;
+}
+async function getAllSet(key) {
+    return await redis_connect_1.redisClient.sMembers(key);
+}

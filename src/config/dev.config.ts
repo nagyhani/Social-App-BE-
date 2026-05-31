@@ -1,0 +1,9 @@
+export const DB_URL = process.env.DB_URL as string
+export const EMAIL_USER = process.env.EMAIL_USER as string
+export const PASSWORD_USER = process.env.PASSWORD_USER as string
+export const REDIS_URL = process.env.REDIS_URL as string
+export const CLOUD_NAME = process.env.CLOUD_NAME as string
+export const API_KEY = process.env.API_KEY as string
+export const API_SECRET = process.env.API_SECRET as string
+export const APP_NAME = process.env.APP_NAME as string
+export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string
